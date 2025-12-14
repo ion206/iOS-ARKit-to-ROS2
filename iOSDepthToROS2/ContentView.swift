@@ -1,11 +1,8 @@
-//
-//  ContentView.swift
-//  iOSDepthToROS2
-//
-//  Created by Ayan Syed on 12/10/25.
-//
-
 import SwiftUI
+import RealityKit
+import ARKit
+
+
 
 struct ContentView: View {
     var body: some View {
@@ -13,12 +10,10 @@ struct ContentView: View {
             Image(systemName: "globe")
                 .imageScale(.large)
                 .foregroundStyle(.tint)
-            Text("Hello, world!")
+            Text("Running App..")
         }
         .padding()
+        CustomARViewContainer()
+            .ignoresSafeArea()
     }
-}
-
-#Preview {
-    ContentView()
 }

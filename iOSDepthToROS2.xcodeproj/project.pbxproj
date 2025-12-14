@@ -6,14 +6,36 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		8578C65B2EEE7C6200CA64B9 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = 8578C65A2EEE7C6200CA64B9 /* Starscream */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		85EF68912EEAAE2A00F8E43D /* iOSDepthToROS2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSDepthToROS2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		85EF68B32EEAC7CB00F8E43D /* Exceptions for "iOSDepthToROS2" folder in "iOSDepthToROS2" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 85EF68902EEAAE2A00F8E43D /* iOSDepthToROS2 */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		85EF68932EEAAE2A00F8E43D /* iOSDepthToROS2 */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				85EF68B32EEAC7CB00F8E43D /* Exceptions for "iOSDepthToROS2" folder in "iOSDepthToROS2" target */,
+			);
 			path = iOSDepthToROS2;
+			sourceTree = "<group>";
+		};
+		85EF68AB2EEAB94700F8E43D /* DataProcessing */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = DataProcessing;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -23,6 +45,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8578C65B2EEE7C6200CA64B9 /* Starscream in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -32,6 +55,7 @@
 		85EF68882EEAAE2A00F8E43D = {
 			isa = PBXGroup;
 			children = (
+				85EF68AB2EEAB94700F8E43D /* DataProcessing */,
 				85EF68932EEAAE2A00F8E43D /* iOSDepthToROS2 */,
 				85EF68922EEAAE2A00F8E43D /* Products */,
 			);
@@ -62,9 +86,11 @@
 			);
 			fileSystemSynchronizedGroups = (
 				85EF68932EEAAE2A00F8E43D /* iOSDepthToROS2 */,
+				85EF68AB2EEAB94700F8E43D /* DataProcessing */,
 			);
 			name = iOSDepthToROS2;
 			packageProductDependencies = (
+				8578C65A2EEE7C6200CA64B9 /* Starscream */,
 			);
 			productName = iOSDepthToROS2;
 			productReference = 85EF68912EEAAE2A00F8E43D /* iOSDepthToROS2.app */;
@@ -94,6 +120,9 @@
 			);
 			mainGroup = 85EF68882EEAAE2A00F8E43D;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				8578C6592EEE7C6200CA64B9 /* XCRemoteSwiftPackageReference "Starscream" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 85EF68922EEAAE2A00F8E43D /* Products */;
 			projectDirPath = "";
@@ -256,6 +285,9 @@
 				DEVELOPMENT_TEAM = KG8W26V5R2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = iOSDepthToROS2/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Depth camera";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -288,6 +320,9 @@
 				DEVELOPMENT_TEAM = KG8W26V5R2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = iOSDepthToROS2/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Depth camera";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -332,6 +367,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		8578C6592EEE7C6200CA64B9 /* XCRemoteSwiftPackageReference "Starscream" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/daltoniam/Starscream.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.8;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		8578C65A2EEE7C6200CA64B9 /* Starscream */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8578C6592EEE7C6200CA64B9 /* XCRemoteSwiftPackageReference "Starscream" */;
+			productName = Starscream;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 85EF68892EEAAE2A00F8E43D /* Project object */;
 }
