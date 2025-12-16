@@ -13,7 +13,11 @@ To start receiving and convert topic and depthMap data:
 
 Only need to run once: 
 Set the python script to an executable
-'''chmod +x tf_broadcaster.py'''
 
-Launch ROSbridge and all other nodes:
-'''ros2 launch arkitAdapter.launch.py'''
+```chmod +x tf_broadcaster.py```
+
+
+
+To Launch ROSbridge and all other nodes:
+
+```ros2 launch arkitAdapter.launch.py```
