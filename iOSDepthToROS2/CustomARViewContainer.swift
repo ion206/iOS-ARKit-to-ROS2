@@ -8,6 +8,8 @@ import SwiftUI
 import RealityKit
 import ARKit
 
+// Holds the session and configuration externally from the constantly updating ARview
+
 struct CustomARViewContainer: UIViewRepresentable {
     func makeUIView(context: Context) -> CustomARView {
             print("Container Init and AR Session Starting...")

@@ -19,7 +19,7 @@
 		85EF68B32EEAC7CB00F8E43D /* Exceptions for "iOSDepthToROS2" folder in "iOSDepthToROS2" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Info.plist,
+				resources/Info.plist,
 			);
 			target = 85EF68902EEAAE2A00F8E43D /* iOSDepthToROS2 */;
 		};

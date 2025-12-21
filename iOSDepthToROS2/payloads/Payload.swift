@@ -20,8 +20,8 @@ class Payload{
     var data: Data = Data()
     
     init(topicField: String, msgType: String){
-        self.topic = topic + topicField // Ex. /arkit/Image/testImage
-        self.type = type + msgType // Ex. /sensor_msgs/msg/Image
+        self.topic = topic + topicField // TOPIC NAME Ex. /arkit/Image/testImage
+        self.type = type + msgType // TOPIC TYPE Ex. /sensor_msgs/msg/Image
     }
     
     

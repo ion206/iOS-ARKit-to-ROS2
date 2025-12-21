@@ -10,8 +10,10 @@
 //Note that when updating settings, you will need to restart the app for settings to take effect
 
 //Settings that can be altered
-//IP Address: IP of the host websocket, the ROS2 Machine running the ros_bridge command
-//Topic Depth - Activates/Deactivates 
+//	IP Address: IP of the host websocket, the ROS2 Machine running the ros_bridge server
+//	Topic Depth and Image Data - Activate/Deactivates
+// 	Odometry Pose Data - Activate/Deactivate
+// 	Upload FPS (Hz) (Frames being sent per sec)
 
 import SwiftUI
 

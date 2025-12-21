@@ -1,4 +1,12 @@
+//
+//  ContentView.swift
+//  iOSDepthToROS2
+//
+//  Created by Ayan Syed on 12/11/25.
+//
 import SwiftUI
+
+//Home Screen UI
 
 struct ContentView: View {
     var body: some View {

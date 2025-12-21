@@ -10,7 +10,10 @@ import RealityKit
 import SwiftUI
 import CoreVideo
 
+//AR View handles topic creation, data getting/updating, and uploading
+//Basically the main controller of everything this app does!
 
+// Create a Payload Object for every topic we want to upload
 let depthTopic = ImagePayload(topicName: "depth_raw")
 let imageTopic = ImagePayload(topicName: "image_raw", encoding: "rgb8")
 let confidenceTopic = ImagePayload(topicName: "depth_confidence", encoding: "mono8")
@@ -23,42 +26,52 @@ let cameraInfoTopic = CameraInfoPayload(topicName: "camera_info")
 // Make CustomARView conform to ARSessionDelegate
 class CustomARView: ARView, ARSessionDelegate {
 	
+	//Core variables and Class Handlers
+    private var activePayloads: [String : Payload] = [:] // Holds the Payloads that will be updated and sent
+    private var websocket: WebSockets! // WebSocket Handler Class
 	
-    
-    private var activePayloads: [String : Payload] = [:]
-    private var websocket: WebSockets! // Will be initialized in init
+	
+	//For FPS and timestamp
     private var sessionTimeOffset: TimeInterval?
-    private let defaults = UserDefaults.standard
     private var lastPublishTime: TimeInterval = 0
-    private var targetPublishInterval: TimeInterval = 1.0 / 10.0 // 10 FPS (0.1 seconds)
+    private var targetPublishInterval: TimeInterval = 1.0 / 10.0 // Default 10 FPS (0.1 seconds)
+	
+	//Other
+	private let defaults = UserDefaults.standard
     
+	
+	//Constructor
     required init(frame frameRect: CGRect) {
         super.init(frame: frameRect)
-        // Set the view's session delegate to itself
-        session.delegate = self
-        // 1. --- CONNECTION SETUP ---
+        session.delegate = self // Set the view's session delegate to itself
+		
+        // --- CONNECTION SETUP ---
         let rosHost = defaults.string(forKey: "ros_ip_address") ?? "XXX.XXX.X.XXX"
         self.websocket = WebSockets(ip: rosHost)
         
-        // 2. --- TOPIC ACTIVATION ---
+		
+		
+        // --- TOPIC ACTIVATION ---
 	    
         // Load flags (Default values are defined in SettingsView, but defaults.bool(forKey:) returns false if key doesn't exist)
         let isDepthActive = defaults.bool(forKey: "topic_depth")
         let isPoseActive = defaults.bool(forKey: "topic_pose")
-        let isImuActive = defaults.bool(forKey: "topic_imu")
+        //let isImuActive = defaults.bool(forKey: "topic_imu") - Dont support IMU as of now
         
+		//What Topics to activate for updating and uploading
+		//Active Payload keys correspond to topic names
         if isDepthActive {
             activePayloads["depth_raw"] = depthTopic
-            //activePayloads["depth_confidence"] = confidenceTopic
             activePayloads["camera_info"] = cameraInfoTopic
-		activePayloads["image_raw"] = imageTopic
+			activePayloads["image_raw"] = imageTopic
+			//activePayloads["depth_confidence"] = confidenceTopic
         }
         if isPoseActive {
             activePayloads["pose_tf"] = poseTfTopic
-		   activePayloads["camera_odom"] = odomTopic
+		   	activePayloads["camera_odom"] = odomTopic
         }
         
-        // 3. --- FPS SETUP ---
+        //--- FPS SETUP ---
         let targetFPS = defaults.integer(forKey: "target_fps") // Will be 0 if unset, but Stepper starts at 1
         // Ensure you use a minimum FPS if the saved value is 0 or less
         let finalFPS = max(1, targetFPS)
@@ -73,7 +86,7 @@ class CustomARView: ARView, ARSessionDelegate {
             }
         }
 	    
-	    // Other Data Extraction Stuff
+	    // Start Tracking Motion in Data Extractor
 	    DataExtractor.startMotionUpdates()
     }
     
@@ -82,34 +95,36 @@ class CustomARView: ARView, ARSessionDelegate {
     }
 
     
-    
     // This delegate method is called automatically every time the session updates a frame
     func session(_ session: ARSession, didUpdate frame: ARFrame) {
         
-        let arFrameTime = frame.timestamp
+        let arFrameTime = frame.timestamp //This Frame's Timestamp
                 
-                if (arFrameTime - lastPublishTime) < targetPublishInterval {
-                    return // Skip this frame if it's too soon
-                }
+		// Skip this frame if it's too soon
+		if (arFrameTime - lastPublishTime) < targetPublishInterval { return }
         
-        // 1. Calculate and store the offset on the first run
+        // Calculate and store the offset on the first run
+		// Needed becuase ROS Time is UNIX time while App time is from start of session
         if sessionTimeOffset == nil {
             // UNIX time now - AR time now = offset
             sessionTimeOffset = Date().timeIntervalSince1970 - arFrameTime
         }
         
-        // 2. Calculate the CORRECT UNIX Epoch time for the frame
+        // Calculate the CORRECT UNIX Epoch time for the frame
         guard let offset = sessionTimeOffset else { return }
         
         let correctUnixEpochTime = offset + arFrameTime
+		
+		// --- UPDATE ACTIVATED TOPICS WITH RELEVANT INFO ---
         
         guard let sceneDepth = frame.sceneDepth else { return }
         if activePayloads["depth_raw"] != nil { //check if depth_raw is an activeTopic
             let (rawDepthData, width, height) = DataExtractor.extractDownscaledDepthData(from: sceneDepth)
             depthTopic.updateData(data: rawDepthData, height: height, width: width)
-		   print("h", height)
-		   print("w", width)
+		   //print("h", height)
+		   //print("w", width)
         }
+		
         if activePayloads["depth_confidence"] != nil { //check if depth_confidence is an activeTopic
             let (rawData, width, height) = DataExtractor.extractRawConfidenceData(from: sceneDepth)
             confidenceTopic.updateData(data: rawData, height: height, width: width)
@@ -137,21 +152,25 @@ class CustomARView: ARView, ARSessionDelegate {
         
         if activePayloads["camera_info"] != nil { //check if pose_tf is an activeTopic
 		   let scaleFactor: CGFloat = 0.1 // 1440 * 0.25 = 360
-		   let (imgData, scaledW, scaledH) = DataExtractor.extractDownsampledRGB8Data(from: imagePixelBuffer, scale: scaleFactor)
-
+		   let (_, scaledW, scaledH) = DataExtractor.extractDownsampledRGB8Data(from: imagePixelBuffer, scale: scaleFactor)
 		   // Update Camera Info with the SCALED values
 		   cameraInfoTopic.updateResolution(height: scaledH, width: scaledW)
 		   cameraInfoTopic.updateIntrinsics(matrix: frame.camera.intrinsics, scale: Double(scaleFactor))
         }
-	    
+		
+		
+	    // Iterate through our active payloads and upload them to ros_bridge
+		// We use JSON for smaller Data Uploading Topics and BSON for more heavier uploads like images becuase we can use Binary and smaller footprint
+		//NOTE AYAN FIX THIS  - upload BSON is broken rn so we are temp using JSON for everyhting
         for payload in activePayloads{
-		   if payload.value.type is ImagePayload{
+			//if payload.value is ImagePayload{
+			if payload.value.type is ImagePayload{ // Always false so BSON isn't run
 			   websocket.sendBSONString(bsonData: payload.value.getBSONPayload(frameTime: correctUnixEpochTime))
 			   
-		   }
-		   else{
+			}
+			else{
 			   websocket.sendJSONString(jsonString: payload.value.getPayload(frameTime: correctUnixEpochTime))
-		   }
+			}
         }
         
         lastPublishTime = arFrameTime

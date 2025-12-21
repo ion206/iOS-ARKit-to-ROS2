@@ -1,10 +1,18 @@
+//
+//  WebSockets.swift
+//  iOSDepthToROS2
+//
+//  Created by Ayan Syed on 12/15/25.
+//
+
 import Starscream
 import CoreVideo
 
-// Note: It's good practice to make the class final
+//Uses StarScream Websockets to connect and send data to ros_bridge
+//This class focuses on the websocket, networking, and data upload logic
+
 final class WebSockets: WebSocketDelegate {
     
-    // Use 'any WebSocketClient' for the property type for better compatibility
     var socket: WebSocket
     var isConnected = false
     
