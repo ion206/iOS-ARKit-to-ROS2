@@ -1,11 +1,5 @@
----
-
-## 📘 Guide: Deploying Your iOS App to a Personal Device
-
+# Guide: Deploying Your iOS App to a Personal Device
 **Author:** Ayan Syed
-
-**Topic:** Free Personal Deployment via Xcode
-
 ---
 
 ### 1. Prerequisites

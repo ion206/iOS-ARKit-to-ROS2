@@ -6,6 +6,11 @@ This repository provides a high-performance Swift bridge that transforms any iPh
 
 ---
 
+
+https://github.com/user-attachments/assets/d506619e-f80f-4af5-b866-b51fb6ffb8b3
+
+
+
 ## 📱 Features
 This app is designed specifically to exploit the hardware found in **iPhone Pro (12+)** models.
 
@@ -54,6 +59,13 @@ The app exposes ARKit's fused **VIO** output. This combines high-frequency gyros
 
 ---
 
+## SLAMDemo
+* Testing SLAM capabilities coming solely from a moving iPhone streamed over a standard home WiFi Connection
+* Using RTABMap to generate a point cloud and costmap
+
+https://github.com/user-attachments/assets/ec9c8f57-b3c4-4eb3-a548-ba818d99d8d9
+
+---
 ## 🚀 Getting Started
 
 ### 1. Prerequisite: ROS 2 Setup
@@ -67,7 +79,7 @@ My Setup, just for reference:
 ### 2. Configure the App
 Apple allows "Personal Development" for free, meaning you don't need to pay the $99/year Developer Program fee just to run your code on your own hardware. Deploying your own Swift apps to your personal iPhone/iPad is a straightforward process, but it requires a specific set of steps to bypass the standard App Store submission.
 
-**See DeployingiOSDeveloperApp.md**
+* See [**DeployingiOSDeveloperApp.md**](https://github.com/ion206/iOS-ARKit-to-ROS2/blob/8bad05f11cd74830c896bff005ce5e63fc3d3893/AppDeloyment.md) 
 
 ### 3. Usage
 On your ROS 2 machine (Humble/Jazzy), install and launch the `rosbridge_server`:
