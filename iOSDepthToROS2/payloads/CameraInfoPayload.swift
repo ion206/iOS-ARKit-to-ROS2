@@ -1,6 +1,8 @@
 import Foundation
 import simd
 
+
+///Handles topic type: sensor_msgs/msg/CameraInfo
 class CameraInfoPayload: Payload {
     let topicType: String = "depth/"
     let msgType: String = "CameraInfo"
@@ -18,6 +20,7 @@ class CameraInfoPayload: Payload {
     init(topicName: String) {
 	   super.init(topicField: (self.topicType + topicName), msgType: self.msgType)
 	   self.type = "sensor_msgs/msg/CameraInfo"
+		print("Created CameraInfo Topic Class: " + self.topic + " with Type: " + self.type)
     }
 
     // Pass the ALREADY SCALED height and width here

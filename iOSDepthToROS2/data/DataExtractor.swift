@@ -16,8 +16,8 @@ import CoreMotion
 
 
 struct DataExtractor {
+	
     // Converts an ARDepthData from ARKit Session into a raw Swift Data object
-
 	static func extractRawDepthData(from depthData: ARDepthData) -> (data: Data, width: Int, height: Int) {
         // Get the CVPixelBuffer (The raw data container)
 		let depthPixelBuffer = depthData.depthMap

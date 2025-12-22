@@ -6,8 +6,9 @@
 //
 
 
-//ABSTRACT CLASS
-
+//This OOP payload system uses a modular Inheritance model to standardize how different types of sensor data are formatted for ROS
+//A base Payload class defines common attributes like timestamps and topic names, while specialized child classes (e.g., ImagePayload, OdometryPayload) implement their own logic to serialize raw ARKit data into either JSON or BSON formats
+//By encapsulating the complex ROS message structures within these objects, the rest of the app can stream diverse data types through a single, clean interface without needing to manage low-level protocol details
 import Foundation
 
 class Payload{
@@ -46,11 +47,13 @@ class Payload{
         return rosTime
     }
 	
+	//To be overrided in Child Classes
 	func getBSONPayload(frameTime: TimeInterval) -> Data{return Data()}
     
     
 
     // Turns a msg into JSON Format
+	//Base function here just returns the serialized self.msg Data of the object
     open func serializeToJSON() ->  String{
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: self.msg, options: [])

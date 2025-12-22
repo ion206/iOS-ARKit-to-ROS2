@@ -7,7 +7,9 @@
 
 import Foundation
 import SwiftBSON
+//Has support for both JSON and BSON encoding
 
+///Handles topic type: sensor_msg/msg/Image
 class ImagePayload: Payload{
     let isBigEndian: Int = 0
     let topicType: String = "Image/"
@@ -104,8 +106,6 @@ class ImagePayload: Payload{
 		   "msg": .document(msg)
 	    ]
 	    
-	    // To send this via Starscream:
-	    // self.payloadData = try? finalDoc.toData()
 	    self.payload = finalDoc
 	}
     

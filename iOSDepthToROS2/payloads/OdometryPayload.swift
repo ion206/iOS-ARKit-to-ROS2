@@ -7,6 +7,7 @@ import Foundation
 import simd
 import ARKit
 
+///Handles topic type: nav_msgs/msg/Odometry
 class OdometryPayload: Payload {
     let topicType: String = "Odometry/"
     let msgType: String = "Odometry"

@@ -47,11 +47,8 @@ final class WebSockets: WebSocketDelegate {
         isConnected = true
     }
     
-    // MARK: - WebSocketDelegate Protocol Implementation
-    // This MUST match the Starscream protocol exacty
+    // WebSocketDelegate Protocol Implementation
     public func didReceive(event: WebSocketEvent, client: any WebSocketClient) {
-        
-        
         switch event {
         case .connected(let headers):
             isConnected = true

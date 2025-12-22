@@ -9,6 +9,7 @@ import Foundation
 import simd
 import ARKit
 
+///Handles topic type: geometry_msgs/msg/TransformStamped
 class TransformStampedPayload: Payload{
 	let isBigEndian: Int = 0
 	let topicType: String = "Pose/"

@@ -163,10 +163,9 @@ class CustomARView: ARView, ARSessionDelegate {
 		// We use JSON for smaller Data Uploading Topics and BSON for more heavier uploads like images becuase we can use Binary and smaller footprint
 		//NOTE AYAN FIX THIS  - upload BSON is broken rn so we are temp using JSON for everyhting
         for payload in activePayloads{
-			//if payload.value is ImagePayload{
-			if payload.value.type is ImagePayload{ // Always false so BSON isn't run
+			if 1 == 0 { //Always false so BSON isn't run - Should be "payload.value is ImagePayload{"
+				//BSON is currently quite unreliable on rosbridge's side so will keep this functionality for images here for the future
 			   websocket.sendBSONString(bsonData: payload.value.getBSONPayload(frameTime: correctUnixEpochTime))
-			   
 			}
 			else{
 			   websocket.sendJSONString(jsonString: payload.value.getPayload(frameTime: correctUnixEpochTime))

@@ -12,6 +12,8 @@ import simd
 
 //Currently Unimplemented, I think this capbility is for visionOS only
 //We dont NEED it for anything, might implement later
+
+///Handles topic type: sensor_msg/msg/IIMU
 class IMUPayload: Payload{
     let topicType: String = "IMU/"
     let msgType: String = "Imu"
@@ -27,7 +29,7 @@ class IMUPayload: Payload{
     
     init(topicName: String){
         super.init(topicField: (self.topicType + topicName), msgType: self.msgType)
-        print("Created Image Topic Class: " + self.topic + " with Type: " + self.type)
+        print("Created IMU Topic Class: " + self.topic + " with Type: " + self.type)
     }
     
     
