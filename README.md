@@ -9,15 +9,17 @@ Developed and Tested on:
 * Ubuntu 22.04
 
 ROS2 Launch and publisher topic Files:
-To start receiving and convert topic and depthMap data:
-
-Only need to run once: 
-Set the python script to an executable
-
-```chmod +x tf_broadcaster.py```
+To start receiving and convert topics
 
 
+#Intial Setup Commands, working off a humble base image
+apt update && apt install ros-humble-rosbridge-suite
+source /opt/ros/humble/setup.bash
+ros2 launch rosbridge_server rosbridge_websocket_launch.xml
 
-To Launch ROSbridge and all other nodes:
+sudo apt install ros-$ROS_DISTRO-foxglove-bridge
+ros2 launch foxglove_bridge foxglove_bridge_launch.xml port:=8765
 
-```ros2 launch arkitAdapter.launch.py```
+
+Foxglove Port: 8765
+RosBridge Port : 9090
