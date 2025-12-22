@@ -64,7 +64,7 @@ class CustomARView: ARView, ARSessionDelegate {
             activePayloads["depth_raw"] = depthTopic
             activePayloads["camera_info"] = cameraInfoTopic
 			activePayloads["image_raw"] = imageTopic
-			//activePayloads["depth_confidence"] = confidenceTopic
+			activePayloads["depth_confidence"] = confidenceTopic
         }
         if isPoseActive {
             activePayloads["pose_tf"] = poseTfTopic
