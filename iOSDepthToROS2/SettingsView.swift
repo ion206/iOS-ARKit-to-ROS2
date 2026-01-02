@@ -38,13 +38,6 @@ struct SettingsView: View {
                         .autocapitalization(.none)
                 }
 
-                // --- B. Topic Selection ---
-                Section(header: Text("Data Streams (Energy Impact)")) {
-                    Toggle("Depth, Confidence, & Camera Info", isOn: $isDepthActive)
-                        .tint(.red)
-                    Toggle("Camera Pose (Odometry)", isOn: $isPoseActive)
-                        .tint(.orange)
-                }
                 
                 // --- C. Publishing Rate ---
                 Section(header: Text("Publishing Rate")) {

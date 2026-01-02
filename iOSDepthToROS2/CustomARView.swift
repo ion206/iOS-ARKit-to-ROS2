@@ -18,7 +18,7 @@ import CoreVideo
 //Enable/Disable Topics Manually
 let enableDepthRaw = true // /arkit/Image/depth_raw
 let enableImageRaw = true // /arkit/Image/image_raw
-let enableConfidence = true// /arkit/Image/depth_confidence
+let enableConfidence = false // /arkit/Image/depth_confidence
 let enablePoseTf = true // /arkit/Pose/pose_tf
 let enableOdom = true // /arkit/Odometry/camera_odom
 let enableCamInfo = true // /arkit/depth/camera_info
@@ -70,24 +70,15 @@ class CustomARView: ARView, ARSessionDelegate {
 		
 		
         // --- TOPIC ACTIVATION ---
-	    
-        // Load flags (Default values are defined in SettingsView, but defaults.bool(forKey:) returns false if key doesn't exist)
-        let isDepthActive = defaults.bool(forKey: "topic_depth")
-        let isPoseActive = defaults.bool(forKey: "topic_pose")
-        //let isImuActive = defaults.bool(forKey: "topic_imu") - Dont support IMU as of now
         
 		//What Topics to activate for updating and uploading
 		//Active Payload keys correspond to topic names
-        if isDepthActive {
-			if enableDepthRaw {activePayloads["depth_raw"] = depthTopic}
-			if enableCamInfo {activePayloads["camera_info"] = cameraInfoTopic}
-			if enableImageRaw {activePayloads["image_raw"] = imageTopic}
-			if enableConfidence {activePayloads["depth_confidence"] = confidenceTopic}
-        }
-        if isPoseActive {
-			if enablePoseTf {activePayloads["pose_tf"] = poseTfTopic}
-			if enableOdom {activePayloads["camera_odom"] = odomTopic}
-        }
+		if enableDepthRaw {activePayloads["depth_raw"] = depthTopic}
+		if enableCamInfo {activePayloads["camera_info"] = cameraInfoTopic}
+		if enableImageRaw {activePayloads["image_raw"] = imageTopic}
+		if enableConfidence {activePayloads["depth_confidence"] = confidenceTopic}
+		if enablePoseTf {activePayloads["pose_tf"] = poseTfTopic}
+		if enableOdom {activePayloads["camera_odom"] = odomTopic}
         
         //--- FPS SETUP ---
         let targetFPS = defaults.integer(forKey: "target_fps") // Will be 0 if unset, but Stepper starts at 1
